@@ -9,8 +9,8 @@ bool run_hidden_tests()
     std::vector<std::vector<int>> tests = {
         {100,200,300},
         {-2,-4,-6},
-        {1},
         {},
+        {1},
         {INT_MAX,2}
     };
 
