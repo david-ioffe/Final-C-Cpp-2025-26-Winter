@@ -17,7 +17,10 @@ jobs:
           sudo apt install gh -y
 
       - name: Authenticate
-        run: echo "${{ secrets.ORG_TOKEN }}" | gh auth login --with-token
+        run: |
+          echo "${{ secrets.ORG_TOKEN }}" | gh auth login \
+          --hostname github.cs.huji.ac.il \
+          --with-token
 
       - name: Fix line endings
         run: |
