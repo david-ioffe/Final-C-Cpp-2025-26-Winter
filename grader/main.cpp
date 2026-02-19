@@ -1,18 +1,22 @@
 #include <iostream>
 
-bool run_public_tests();
-bool run_hidden_tests();
+int run_public_tests();
+int run_hidden_tests();
 
 int main()
 {
+    int public_passed = run_public_tests();
+    int hidden_passed = run_hidden_tests();
+
+    int total_public = 4;
+    int total_hidden = 5;
+
     int score = 0;
 
-    if (run_public_tests())
-        score += 50;
+    score += (public_passed * 50) / total_public;
+    score += (hidden_passed * 50) / total_hidden;
 
-    if (run_hidden_tests())
-        score += 50;
+    std::cout << "\nFinal Grade: " << score << "\n";
 
-    std::cout << "Final Grade: " << score << std::endl;
     return 0;
 }
