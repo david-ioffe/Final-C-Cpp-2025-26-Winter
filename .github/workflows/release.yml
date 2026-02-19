@@ -1,0 +1,23 @@
+name: Release Exam
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt update
+          sudo apt install gh -y
+
+      - name: Authenticate
+        run: echo "${{ secrets.ORG_TOKEN }}" | gh auth login --with-token
+
+      - name: Run release script
+        run: bash exam-admin/release_exam.sh
