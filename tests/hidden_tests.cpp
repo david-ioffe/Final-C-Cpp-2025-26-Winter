@@ -1,24 +1,64 @@
+#include <iostream>
 #include <vector>
 #include <climits>
 #include "../grader/interface.h"
 
 int reference_sum(const std::vector<int>& v);
 
-bool run_hidden_tests()
+#define GREEN "\033[32m"
+#define RED   "\033[31m"
+#define RESET "\033[0m"
+
+struct TestCase {
+    std::vector<int> input;
+    std::string reason;
+};
+
+int run_hidden_tests()
 {
-    std::vector<std::vector<int>> tests = {
-        {100,200,300},
-        {-2,-4,-6},
-        {},
-        {1},
-        {INT_MAX,2}
+    std::vector<TestCase> tests = {
+        {{100,200,300}, "Large positive numbers"},
+        {{-2,-4,-6}, "Negative even numbers"},
+        {{}, "Empty vector"},
+        {{1}, "Single odd element"},
+        {{INT_MAX,2}, "Edge case with INT_MAX"}
     };
 
-    for (auto& t : tests)
+    int passed = 0;
+    int test_number = 1;
+
+#ifdef REVIEW_MODE
+    std::cout << "\n===== PRIVATE TESTS =====\n";
+#endif
+
+    for (const auto& t : tests)
     {
-        if (sum_even(t) != reference_sum(t))
-            return false;
+        int expected = reference_sum(t.input);
+        int actual = sum_even(t.input);
+
+        if (actual == expected)
+        {
+#ifdef REVIEW_MODE
+            std::cout << GREEN
+                      << "Private Test " << test_number << " PASSED"
+                      << RESET << "\n";
+#endif
+            passed++;
+        }
+        else
+        {
+#ifdef REVIEW_MODE
+            std::cout << RED
+                      << "Private Test " << test_number << " FAILED\n"
+                      << "  Reason:   " << t.reason << "\n"
+                      << "  Expected: " << expected << "\n"
+                      << "  Actual:   " << actual
+                      << RESET << "\n";
+#endif
+        }
+
+        test_number++;
     }
 
-    return true;
+    return passed;
 }
