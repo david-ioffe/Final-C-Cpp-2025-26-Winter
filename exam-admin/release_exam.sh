@@ -12,9 +12,10 @@ while read username; do
     --private \
     --template $ORG/$TEMPLATE
 
-  gh api \
+  gh api -hostname github.cs.huji.ac.il \
     -X PUT \
     repos/$ORG/$REPO_NAME/collaborators/$username \
     -f permission=push
 
 done < exam-admin/students.txt
+
