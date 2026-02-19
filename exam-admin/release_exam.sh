@@ -1,45 +1,20 @@
-name: Release Exam
+#!/bin/bash
 
-on:
-  schedule:
-    - cron: '0 13 19 2 *'   # ⚠ שעה ב-UTC (ישראל = UTC+2 בחורף)
-  workflow_dispatch:
+ORG="huji-exams"
+TEMPLATE="exam-template-student"
 
-jobs:
-  release:
-    runs-on: ubuntu-latest
+while read username; do
+  REPO_NAME="exam-$username"
 
-    steps:
-      - name: Checkout admin repo
-        uses: actions/checkout@v3
+  echo "Creating repo for $username"
 
-      - name: Install GitHub CLI
-        run: |
-          sudo apt update
-          sudo apt install gh -y
+  gh repo create $ORG/$REPO_NAME \
+    --private \
+    --template $ORG/$TEMPLATE
 
-      - name: Authenticate
-        run: echo "${{ secrets.ORG_TOKEN }}" | gh auth login --with-token
+  gh repo add-collaborator \
+    $ORG/$REPO_NAME \
+    $username \
+    --permission push
 
-      - name: Release repos
-        run: |
-          ORG="huji-exams"
-          TEMPLATE="exam-template-student"
-
-          while read username; do
-
-            REPO_NAME="exam-${username}"
-
-            echo "Creating repo for $username"
-
-            gh repo create $ORG/$REPO_NAME \
-              --private \
-              --template $ORG/$TEMPLATE \
-              --confirm
-
-            gh repo add-collaborator \
-              $ORG/$REPO_NAME \
-              ${username}@cs.huji.ac.il \
-              --permission push
-
-          done < exam-admin/students.txt
+done < exam-admin/students.txt
