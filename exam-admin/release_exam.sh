@@ -1,7 +1,7 @@
 #!/bin/bash
 
-ORG="huji-exams"
-TEMPLATE="exam-template-student"
+ORG="david-ioffe"
+TEMPLATE="Final-C-Cpp-2025-26-Winter"
 
 while read username; do
   REPO_NAME="exam-$username"
@@ -12,9 +12,9 @@ while read username; do
     --private \
     --template $ORG/$TEMPLATE
 
-  gh repo add-collaborator \
-    $ORG/$REPO_NAME \
-    $username \
-    --permission push
+  gh api \
+    -X PUT \
+    repos/$ORG/$REPO_NAME/collaborators/$username \
+    -f permission=push
 
 done < exam-admin/students.txt
