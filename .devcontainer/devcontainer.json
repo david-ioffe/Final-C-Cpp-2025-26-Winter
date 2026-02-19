@@ -1,0 +1,6 @@
+{
+  "name": "Exam C++ Environment",
+  "image": "mcr.microsoft.com/devcontainers/cpp:1-debian-11",
+  "features": {},
+  "postCreateCommand": "sudo apt update"
+}
