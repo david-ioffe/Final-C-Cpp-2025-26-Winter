@@ -1,0 +1,7 @@
+Exam Simulator in GitHub instead of in Moodle Exam. 
+The idea is to move all tests from the current workplace - Moodle Exam into GitHub/Github-Codespaces. 
+
+The Professor can open a repo and write the exam, tests and submition. 
+Students will take the exam in GitHub-Codespaces. 
+
+This will free resources from moodle - and let students take the exam without fear of moodle shutting down mid exam.
