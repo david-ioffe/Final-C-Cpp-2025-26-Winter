@@ -5,4 +5,8 @@
 * @param v - vector that stores int values.
 * @return - function should return the sum of all the even numbers.
 */
-int sum_even(const std::vector<int>& v);
+int sum_even(const std::vector<int>& v)
+{
+  // Solution goes here
+}
+
